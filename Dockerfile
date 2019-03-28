@@ -34,12 +34,3 @@ RUN ext install rust-lang.rust 0.5.3
 ENV CARGO_TARGET_DIR=/home/rust/target
 
 CMD code-server
-
-FROM cubicle as cubicle-onbuild
-
-ONBUILD RUN mkdir src && touch src/lib.rs && echo 'fn main() {}' > src/main.rs
-
-ONBUILD ADD --chown=rust:rust Cargo.lock Cargo.toml ./
-ONBUILD RUN cargo build
-ONBUILD RUN cargo build --tests
-ONBUILD RUN rls-build
